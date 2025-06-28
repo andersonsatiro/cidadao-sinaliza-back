@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
@@ -31,7 +33,7 @@ public class Post {
     @Column(nullable = false, length = 2000)
     private String descricao;
 
-    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Column(nullable = false)
     private boolean permitirComentarios = true;
 
     @Column(nullable = false)
@@ -63,4 +65,14 @@ public class Post {
     @ManyToOne(optional = false)
     @JoinColumn(name = "status_post_id", nullable = false)
     private StatusPost statusPost;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

@@ -1,14 +1,17 @@
-package br.com.cidadao_sinaliza.usuario.entities;
+package br.com.cidadao_sinaliza.post.entities;
 
+import br.com.cidadao_sinaliza.usuario.entities.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,38 +20,34 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "resposta_comentario")
+public class RespostaComentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String nome;
+    @Column(nullable = false, length = 2000)
+    private String descricao;
 
-    @Column(nullable = false, length = 40)
-    private String username;
+    @Min(0)
+    private int qtdApoios;
 
-    @Email
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String senhaHash;
-
-    @Column(name = "foto_perfil_imagem_url")
-    private String urlFotoPerfil;
+    @Min(0)
+    private int qtdContestacoes;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-    private LocalDateTime lastLoginAt;
 
-    @Column(nullable = false)
-    private boolean ativo = true;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "comentario_post_id", nullable = false)
+    private ComentarioPost comentarioPost;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     @PrePersist
     protected void onCreate() {
