@@ -1,4 +1,4 @@
-package br.com.cidadao_sinaliza.profile.entities;
+package br.com.cidadao_sinaliza.people.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

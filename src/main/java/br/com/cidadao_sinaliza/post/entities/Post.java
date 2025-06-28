@@ -1,6 +1,8 @@
 package br.com.cidadao_sinaliza.post.entities;
 
-import br.com.cidadao_sinaliza.profile.entities.Usuario;
+import br.com.cidadao_sinaliza.people.entities.Usuario;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -19,6 +22,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -73,6 +78,14 @@ public class Post {
     @ManyToOne(optional = false)
     @JoinColumn(name = "status_post_id", nullable = false, referencedColumnName = "id")
     private StatusPost statusPost;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ComentarioPost> comentarios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ImagemPost> imagens = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

@@ -1,5 +1,6 @@
 package br.com.cidadao_sinaliza.post.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -55,6 +56,7 @@ public class ImagemPost {
 
     @NotNull
     @ManyToOne(optional = false)
+    @JsonBackReference
     @JoinColumn(name = "post_id", nullable = false, referencedColumnName = "id")
     private Post post;
 
