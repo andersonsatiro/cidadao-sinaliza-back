@@ -1,4 +1,4 @@
-package br.com.cidadao_sinaliza.post.entities;
+package br.com.cidadao_sinaliza.profile.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,13 +13,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "status_post")
-public class StatusPost {
+@Table(name = "genero")
+public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 30, unique = true)
     private String nome;
+
+    @NotBlank
+    @Column(nullable = false, length = 5, unique = true)
+    private String sigla;
 }

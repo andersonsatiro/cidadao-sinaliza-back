@@ -12,8 +12,11 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -21,15 +24,18 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "post")
+@Where(clause = "deteted_at IS NULL")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
+    @NotBlank
     @Column(nullable = false, length = 150)
     private String titulo;
 
+    @NotBlank
     @Column(nullable = false, length = 2000)
     private String descricao;
 
@@ -54,16 +60,18 @@ public class Post {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
+    @NotNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "nicho_post_id")
-    private NichoPost nichoPost;
+    @JoinColumn(name = "categoria_post_id", referencedColumnName = "id")
+    private CategoriaPost categoriaPost;
 
+    @NotNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "status_post_id", nullable = false)
+    @JoinColumn(name = "status_post_id", nullable = false, referencedColumnName = "id")
     private StatusPost statusPost;
 
     @PrePersist
