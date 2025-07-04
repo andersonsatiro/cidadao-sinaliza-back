@@ -1,6 +1,7 @@
-package br.com.cidadao_sinaliza.people.entities;
+package br.com.cidadao_sinaliza.politics.entities;
 
-import br.com.cidadao_sinaliza.politics.entities.Partido;
+import br.com.cidadao_sinaliza.people.entities.Prefeito;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,17 +18,19 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "filiacao_partidaria")
-public class FiliacaoPartidaria {
+@Table(name = "prefeito_mandato")
+public class PrefeitoMandato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Past
-    private LocalDate dataFiliacao;
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate dataInicio;
 
-    @Past
-    private LocalDate dataTermino;
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate dataFim;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -37,6 +39,6 @@ public class FiliacaoPartidaria {
 
     @NotNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "partido_id", nullable = false, referencedColumnName = "id")
-    private Partido partido;
+    @JoinColumn(name = "mandato_id", nullable = false, referencedColumnName = "id")
+    private Mandato mandato;
 }

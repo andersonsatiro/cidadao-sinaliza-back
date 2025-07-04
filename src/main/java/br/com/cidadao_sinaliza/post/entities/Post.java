@@ -1,6 +1,9 @@
 package br.com.cidadao_sinaliza.post.entities;
 
+import br.com.cidadao_sinaliza.location.entities.Bairro;
+import br.com.cidadao_sinaliza.location.entities.Cidade;
 import br.com.cidadao_sinaliza.people.entities.Usuario;
+import br.com.cidadao_sinaliza.politics.entities.Mandato;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -86,6 +90,25 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<ImagemPost> imagens = new ArrayList<>();
+
+    @NotNull
+    @OneToOne(optional = false)
+    @JoinColumn(name = "mandato_id", nullable = false, referencedColumnName = "id")
+    private Mandato mandato;
+
+    @NotNull
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cidade_id", nullable = false, referencedColumnName = "id")
+    private Cidade cidade;
+
+    @ManyToOne
+    @JoinColumn(name = "bairro_id", referencedColumnName = "id")
+    private Bairro bairro;
+
+    @NotNull
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "posicao_post_id", nullable = false, referencedColumnName = "id")
+    private PosicaoPost posicaoPost;
 
     @PrePersist
     protected void onCreate() {

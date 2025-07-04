@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -47,7 +46,4 @@ public class Partido {
     @NotBlank
     @Column(name = "logo_imagem_url", nullable = false, unique = true)
     private String urlLogo;
-
-    @Transient
-    private String partidoAtual;
 }
