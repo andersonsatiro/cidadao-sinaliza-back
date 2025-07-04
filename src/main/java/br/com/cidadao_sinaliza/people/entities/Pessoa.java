@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -50,11 +49,6 @@ public class Pessoa {
 
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
-
-    @NotNull
-    @OneToOne(optional = false)
-    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
-    private Usuario usuario;
 
     @PrePersist
     protected void onCreate() {

@@ -92,7 +92,7 @@ public class Post {
     private List<ImagemPost> imagens = new ArrayList<>();
 
     @NotNull
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "mandato_id", nullable = false, referencedColumnName = "id")
     private Mandato mandato;
 

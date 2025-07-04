@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "nicho_post")
+@Table(name = "categoria_post")
 public class CategoriaPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
